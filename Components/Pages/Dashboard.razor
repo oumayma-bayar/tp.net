@@ -48,10 +48,12 @@ else
         </div>
     </div>
 </div>
-<div class="form-check mt-2">
-    <InputCheckbox @bind-Value="ShowCriticalOnly" 
-                   @onchange="async _ => await ExecuteSearch()" 
-                   class="form-check-input" />
+<div>
+    <input type="checkbox"
+           class="form-check-input"
+           @bind="ShowCriticalOnly"
+           @onclick="HandleCriticalClick" />
+
     <label class="form-check-label">
         Afficher alertes (>30.0)
     </label>
@@ -308,5 +310,9 @@ private void SortByValue()
         FilteredSensors = FilteredSensors.OrderByDescending(s => s.Value).ToList();
 
     sortAsc = !sortAsc;
+}
+private async Task HandleCriticalClick()
+{
+    await ExecuteSearch();
 }
 }
