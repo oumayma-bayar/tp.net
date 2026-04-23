@@ -1,0 +1,21 @@
+@using DashboardData.Models
+<div class="card shadow-sm">
+    <div>
+         <i class="bi bi-thermometer-half text-primary me-3" style="font-size: 2rem;"></i>
+    </div>
+    <div>
+            <h3 class="mb-1">@Sensor.Name</h3>
+            <p class="mb-1">
+                <h6>@Sensor.Value °C</h6>
+            </p>
+            <p class="text-muted">
+                @(Sensor.Location?.Name ?? "Lieu inconnu")
+            </p>
+        </div>
+</div>
+
+@code{
+   [Parameter]
+public SensorData Sensor { get; set; } = new();
+
+}

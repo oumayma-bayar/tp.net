@@ -1,0 +1,27 @@
+@page "/logs"
+
+<h1>Journal système</h1>
+
+<ul>
+    @foreach(var log in SystemLogs)
+    {
+        <li class="@(log.Contains("Erreur")? "text-danger" : "text-success")">
+            @log
+        </li>
+    }
+</ul>
+<p>
+     <strong>@SystemLogs.Count(log => log.Contains("Erreur")) Erreurs</strong> sur  <strong>@SystemLogs.Count</strong> Logs.
+</p>
+
+@code{
+
+    private List<string> SystemLogs = new ()
+    {
+        "10:00 - demarrage du systeme",
+        "10:05 - Erreur : connexion au base de données reussie",
+        "10:06 - Reconexion reussie",
+        "10:15 - Erreur : Timeout API externe",
+        "10:20 - Sauvegarde automatique effectuée",  
+    };
+}

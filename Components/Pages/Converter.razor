@@ -1,0 +1,40 @@
+@page "/converter"
+@rendermode InteractiveServer
+
+    <h3>
+        Convertisseur de temperature
+    </h3>
+    <div class="mb-3">
+        <label>Temperature en fahrenheit :</label>
+        <input type="number" class="form-control" @bind="TemperatureF" />
+        <button class="btn btn-primary" @onclick="ConvertFahrenheitToCelsius">convert to Celsius</button>
+    </div>
+
+    <div class="alert alert-success">
+        Resultat en Celsius : <strong>@(Math.Round((TemperatureF-32)*5/9, 2))</strong>°C
+    </div>
+
+    <div class="mb-3">
+        <label>Temperature en Celsius :</label>
+        <input type="number" class="form-control" @bind="TemperatureC" />
+        <button class="btn btn-primary" @onclick="ConvertCelsiusToFahrenheit">convert to Fahrenheit</button>
+    </div>
+
+    <div class="alert alert-success">
+        Resultat en Fahrenheit : <strong>@(Math.Round((TemperatureC*9/5)+32, 2))</strong>°F 
+    </div>
+
+@code{
+    double TemperatureF=100;
+    double TemperatureC=37.78;
+
+    void ConvertFahrenheitToCelsius()
+    {
+        TemperatureC = Math.Round((TemperatureF - 32) * 5 / 9, 2);
+    }   
+
+     void ConvertCelsiusToFahrenheit()
+    {
+        TemperatureF = Math.Round((TemperatureC * 9 / 5) + 32, 2);
+    }   
+}

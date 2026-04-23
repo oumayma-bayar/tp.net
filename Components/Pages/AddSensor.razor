@@ -1,0 +1,42 @@
+@page "/add-sensor"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject ISensorService SensorService
+@using DashboardData.Models
+@using DashboardData.Services
+
+
+<PageTitle>ADD SENSOR</PageTitle>
+
+<h3>Add a new sensor</h3>
+
+<div class="mb-3">
+    <EditForm Model="_newSensor" OnValidSubmit="AddSensors">
+        <div class="mb-3">
+            <label class="form-label">Sensor Name</label>
+            <InputText class="form-control" @bind-Value="_newSensor.Name" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Sensor Value</label>
+            <InputNumber class="form-control" @bind-Value="_newSensor.Value" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Add Sensor
+        </button>
+    </EditForm>
+</div>
+
+@code {
+
+    private SensorData _newSensor = new();
+
+    private void AddSensors()
+    {
+        SensorService.AddSensor(_newSensor);
+
+        // redirection vers dashboard
+        NavigationManager.NavigateTo("/dashboard");
+    }
+}
