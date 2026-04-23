@@ -233,3 +233,4 @@ C:\Users\BYR GAMER\DashboardData\obj\Debug\net10.0\compressed\6xb9o06z95-{0}-6k9
 C:\Users\BYR GAMER\DashboardData\obj\Debug\net10.0\compressed\t2tvocn0z4-{0}-9meuuabozh-9meuuabozh.gz
 C:\Users\BYR GAMER\DashboardData\obj\Debug\net10.0\compressed\cplyezlb1q-{0}-qcnkhbt5lj-qcnkhbt5lj.gz
 C:\Users\BYR GAMER\DashboardData\obj\Debug\net10.0\compressed\6436banu00-{0}-12rnbzdyyc-12rnbzdyyc.gz
+C:\Users\BYR GAMER\DashboardData\obj\Debug\net10.0\DashboardData.sourcelink.json

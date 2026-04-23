@@ -146,16 +146,9 @@ else
 
 <button class="btn btn-secondary mb-3" @onclick="LoadAll">Tous les sondes</button>
 <button class="btn btn-danger mb-3" @onclick="LoadCritical">Alerts (>30.0)</button>
+<a href="/edit-sensor" class="btn btn-success mb-3">+ Nouveau Capteur</a>
 
-@if (Sensors == null)
-{
-    <p><em>pas de chargement des donnees...</em></p>
-}
-else
-{
-    <SensorTable Sensors="Sensors" OnDeleteClicked="DeleteSensor" OnSortRequested="SortByValue" />
-    <a href="/edit-sensor" class="btn btn-success mb-3">+ Nouveau Capteur</a>
-}
+
 
 <div class="row mb-4">
     <div class="col-md-4 mb-3">
