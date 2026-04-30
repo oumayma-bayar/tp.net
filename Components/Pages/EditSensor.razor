@@ -1,5 +1,6 @@
 @page "/edit-sensor"
 @page "/edit-sensor/{Id:int}"
+@attribute [Authorize(Roles = "Admin")]
 @rendermode InteractiveServer
 @using DashboardData.Models
 @using DashboardData.Services

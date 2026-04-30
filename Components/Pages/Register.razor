@@ -1,0 +1,91 @@
+@page "/register"
+@rendermode InteractiveServer
+@using DashboardData.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject NavigationManager NavigationManager
+@inject SignInManager<IdentityUser> SignInManager
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4 card shadow-sm p-4">
+        <h3 class="text-center mb-4">Register</h3>
+        
+        @if (!string.IsNullOrEmpty(Error))
+        {
+            <div class="alert alert-danger">@Error</div>
+        }
+
+        <EditForm Model="@RegisterModel" OnValidSubmit="HandleRegister" FormName="RegisterForm">
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+
+            <div class="mb-3">
+                <label>Email</label>
+                <InputText @bind-Value="RegisterModel.Email" class="form-control" />
+                <ValidationMessage For="@(() => RegisterModel.Email)" class="text-danger" />
+            </div>
+            
+            <div class="mb-3">
+                <label>Password</label>
+                <InputText type="password" @bind-Value="RegisterModel.Password" class="form-control" />
+                <ValidationMessage For="@(() => RegisterModel.Password)" class="text-danger" />
+            </div>
+
+            <div class="mb-3">
+                <label>Confirm Password</label>
+                <InputText type="password" @bind-Value="RegisterModel.ConfirmPassword" class="form-control" />
+                <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" class="text-danger" />
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </EditForm>
+
+        <div class="text-center mt-3">
+            <span class="text-muted">Already have an account?</span>
+            <a href="/login" class="text-decoration-none ms-1">Login</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? Error { get; set; }
+
+    // Initialisation du modèle avec l'attribut SupplyParameterFromForm
+    [SupplyParameterFromForm]
+    private SignUp RegisterModel { get; set; } = new();
+
+    private async Task HandleRegister()
+    {
+        Error = null;
+
+        // 1. Vérification de l'unicité de l'e-mail
+        var userExists = await UserManager.FindByEmailAsync(RegisterModel.Email);
+        if (userExists != null)
+        {
+            Error = "Cet email est déjà utilisé.";
+            return;
+        }
+
+        // 2. Création de l'utilisateur Identity
+        var user = new IdentityUser { 
+            UserName = RegisterModel.Email, 
+            Email = RegisterModel.Email 
+        };
+
+        var result = await UserManager.CreateAsync(user, RegisterModel.Password);
+
+        // 3. Gestion du résultat de l'enregistrement
+        if (result.Succeeded)
+        {
+            // Connexion automatique après un enregistrement réussi
+            await SignInManager.SignInAsync(user, isPersistent: false);
+            NavigationManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            // Affiche les erreurs de validation du serveur
+            Error = string.Join(", ", result.Errors.Select(e => e.Description));
+        }
+    }
+}
